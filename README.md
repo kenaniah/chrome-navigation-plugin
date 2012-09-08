@@ -11,27 +11,27 @@ or top page using simple keyboard shortcuts. The extension can be found here:
     <th>Action</th>
   </tr>
   <tr>
-    <td>&lt;space bar&gt;</td>
+    <td>Space Bar</td>
     <td>next page (when scrolled to the bottom)</td>
   </tr>
   <tr>
-    <td>ctrl+&lt;right arrow&gt;</td>
+    <td>Ctrl + Right</td>
     <td>next page</td>
   </tr>
   <tr>
-    <td>shift+&lt;space bar&gt;</td>
+    <td>Shift + Space Bar</td>
     <td>previous page (when scrolled to the top)</td>
   </tr>
   <tr>
-    <td>ctrl+&lt;left arrow&gt;</td>
+    <td>Ctrl + Left</td>
     <td>previous page</td>
   </tr>
   <tr>
-    <td>ctrl+&lt;up arrow&gt;</td>
+    <td>Ctrl + Up</td>
     <td>section page</td>
   </tr>
   <tr>
-    <td>ctrl+shift+&lt;up arrow&gt;</td>
+    <td>Ctrl + Shift + Up</td>
     <td>top page</td>
   </tr>
 </table>
