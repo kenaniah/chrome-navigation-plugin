@@ -22,6 +22,9 @@ for(var i in links){
 	}
 }
 
+//Flip the links to now search bottom-up
+links = links.reverse();
+
 //Search for destinations based on link contents
 for(var dest in destinations){
 
@@ -32,24 +35,23 @@ for(var dest in destinations){
 	var regexes = [];
 
 	if(dest == "next"){
-		regexes.push(/next/i);
 		regexes.push(/^next/i);
 	}
 	if(dest == "prev"){
-		regexes.push(/prev/i);
-		regexes.push(/previous/i);
 		regexes.push(/^prev/i);
-		regexes.push(/^previous/i);
 	}
 
-	//Attempt to match links based on text
-	for(var regex in regexes){
-		for(var i in links){
-			if(links[i].href && links[i].innerText.match(regex)){
-				destinations[dest] = links[i].href;
+	//Attempt to match links based on text (first match wins)
+	(function(){
+		for(var r in regexes){
+			for(var i in links){
+				if(links[i].href && links[i].innerText.replace(/[^a-z]/i, "").match(regexes[r])){
+					destinations[dest] = links[i].href;
+					return;
+				}
 			}
 		}
-	}
+	})();
 
 }
 
