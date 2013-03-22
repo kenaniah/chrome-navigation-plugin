@@ -82,7 +82,7 @@ function populateDestinations(){
 		(function(){
 			for(var r in regexes){
 				for(var i in links){
-					if(links[i].href && links[i].innerText.replace(/[^a-z]/i, "").match(regexes[r])){
+					if(links[i].href && links[i].innerText.replace(/[^a-z]/i, "").trim().match(regexes[r])){
 						destinations[dest] = links[i].href;
 						targets[dest] = links[i];
 						return;
