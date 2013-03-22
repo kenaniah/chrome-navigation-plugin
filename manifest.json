@@ -1,6 +1,6 @@
 {
   "name" : "Next Page",
-  "version" : "2.0",
+  "version" : "3.0",
   "description" : "Allows next, up, prev, and top links to be used with simple keyboard shortcuts.",
   "permissions" : [ "history" ],
   "content_scripts" : [
