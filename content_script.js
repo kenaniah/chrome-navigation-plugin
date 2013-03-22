@@ -1,24 +1,29 @@
-//Track the list of destinations
+//Global variables
 var destiations = {};
+var targets = {};
 var links = [];
 var timer;
 
+//Resets the timer and causes populateDestinations() to be called after a delay
 function resetDestinations(){
 	destinations = {};
 	if(timer){
 		clearTimeout(timer);
 	}
-	timer = setTimeout(populateDestinations, 1000);
+	timer = setTimeout(populateDestinations, 50);
 }
 
 //Populates the list of destinations
 function populateDestinations(){ 
 
 	//Reset the timer
+	if(timer){
+		clearTimeout(timer);
+	}
 	timer = null;
 	
 	//Reset the list of destinations
-	destinations = {
+	targets = destinations = {
 		prev: null,
 		next: null,
 		up: null,
@@ -37,6 +42,7 @@ function populateDestinations(){
 		for(var dest in destinations){
 			if(links[i].rel.toLowerCase() == dest){
 				destinations[dest] = links[i].href;
+				if(links[i].tagName == "A") targets[dest] = links[i];
 			}
 		}
 	}
@@ -47,8 +53,8 @@ function populateDestinations(){
 	//Search for destinations based on link contents
 	for(var dest in destinations){
 	
-		//Skip destinations that have already been matched
-		if(destinations[dest]) continue;
+		//Skip destinations that have already been matched to an A-link
+		if(destinations[dest] && targets[dest]) continue;
 	
 		//Track an expression matching array
 		var regexes = [];
@@ -72,6 +78,7 @@ function populateDestinations(){
 				for(var i in links){
 					if(links[i].href && links[i].innerText.replace(/[^a-z]/i, "").match(regexes[r])){
 						destinations[dest] = links[i].href;
+						targets[dest] = links[i];
 						return;
 					}
 				}
@@ -90,37 +97,48 @@ function keyListener(e){
 	
 	//Repopulate if we don't yet exist
 	if(!destinations) populateDestinations();
+	
+	var action = null;
 
 	//Ctrl + Left
 	if(e.ctrlKey && !e.shiftKey && e.keyCode == 37 && destinations.prev){
-		window.location = destinations.prev;
+		action = "prev";
 	}
 
 	//Ctrl + Right
 	if(e.ctrlKey && !e.shiftKey && e.keyCode == 39 && destinations.next){
-		window.location = destinations.next;
+		action = "next";
 	}
 
 	//Ctrl + Up
 	if(e.ctrlKey && !e.shiftKey && e.keyCode == 38 && destinations.up){
-		window.location = destinations.up;
+		action = "up";
 	}
 
 	//Ctrl + Shift + Up
 	if(e.ctrlKey && e.shiftKey && e.keyCode == 38 && destinations.top){
-		window.location = destinations.top;
+		action = "top";
 	}
 
 	//Space (when scrolled to the bottom of the window)
 	if(!e.ctrlKey && !e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.next){
 		if(document.body.scrollHeight - document.body.scrollTop - document.documentElement.clientHeight <= 0){
-			window.location = destinations.next;
+			action = "next";
 		}
 	}
 
 	//Shift + Space (when scrolled to the top of the window)
 	if(!e.ctrlKey && e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.prev){
-		if(!document.body.scrollTop) window.location = destinations.prev;
+		if(!document.body.scrollTop) action = "prev";
+	}
+	
+	if(!action) return;
+	
+	//Navigate or click the link
+	if(targets[action]){
+		targets[action].click();
+	}else{
+		window.location = destinations[action];
 	}
 
 }
@@ -132,4 +150,4 @@ if (window == top) {
 }
 
 //Initial population
-populateDestinations();
+resetDestinations();
