@@ -1,71 +1,95 @@
-//Track a list of destinations
-var destinations = {
-	prev: null,
-	next: null,
-	up: null,
-	top: null
-};
+//Track the list of destinations
+var destiations = {};
+var links = [];
+var timer;
 
-//Search through elements in document order
-var links = [].concat(
-	Array.prototype.slice.call(document.getElementsByTagName("LINK")),
-	Array.prototype.slice.call(document.getElementsByTagName("A"))
-);
-
-//Determine the destinations of the rels we care about
-for(var i in links){
-	if(!links[i].rel || !links[i].href) continue;
-	for(var dest in destinations){
-		if(links[i].rel.toLowerCase() == dest){
-			destinations[dest] = links[i].href;
-		}
+function resetDestinations(){
+	destinations = {};
+	if(timer){
+		clearTimeout(timer);
 	}
+	timer = setTimeout(populateDestinations, 1000);
 }
 
-//Flip the links to now search bottom-up
-links = links.reverse();
+//Populates the list of destinations
+function populateDestinations(){ 
 
-//Search for destinations based on link contents
-for(var dest in destinations){
-
-	//Skip destinations that have already been matched
-	if(destinations[dest]) continue;
-
-	//Track an expression matching array
-	var regexes = [];
-
-	if(dest == "next"){
-		regexes.push(/^next/i);
-	}
-	if(dest == "prev"){
-		regexes.push(/^prev/i);
-	}
-	if(dest == "up"){
-		regexes.push(/^up\b/i);
-	}
-	if(dest == "top"){
-		regexes.push(/^home/i);
-	}
-
-	//Attempt to match links based on text (first match wins)
-	(function(){
-		for(var r in regexes){
-			for(var i in links){
-				if(links[i].href && links[i].innerText.replace(/[^a-z]/i, "").match(regexes[r])){
-					destinations[dest] = links[i].href;
-					return;
-				}
+	//Reset the timer
+	timer = null;
+	
+	//Reset the list of destinations
+	destinations = {
+		prev: null,
+		next: null,
+		up: null,
+		top: null
+	};
+	
+	//Search through elements in document order
+	links = [].concat(
+		Array.prototype.slice.call(document.getElementsByTagName("LINK")),
+		Array.prototype.slice.call(document.getElementsByTagName("A"))
+	);
+	
+	//Determine the destinations of the rels we care about
+	for(var i in links){
+		if(!links[i].rel || !links[i].href) continue;
+		for(var dest in destinations){
+			if(links[i].rel.toLowerCase() == dest){
+				destinations[dest] = links[i].href;
 			}
 		}
-	})();
+	}
+	
+	//Flip the links to now search bottom-up
+	links = links.reverse();
+	
+	//Search for destinations based on link contents
+	for(var dest in destinations){
+	
+		//Skip destinations that have already been matched
+		if(destinations[dest]) continue;
+	
+		//Track an expression matching array
+		var regexes = [];
+	
+		if(dest == "next"){
+			regexes.push(/^next/i);
+		}
+		if(dest == "prev"){
+			regexes.push(/^prev/i);
+		}
+		if(dest == "up"){
+			regexes.push(/^up\b/i);
+		}
+		if(dest == "top"){
+			regexes.push(/^home/i);
+		}
+	
+		//Attempt to match links based on text (first match wins)
+		(function(){
+			for(var r in regexes){
+				for(var i in links){
+					if(links[i].href && links[i].innerText.replace(/[^a-z]/i, "").match(regexes[r])){
+						destinations[dest] = links[i].href;
+						return;
+					}
+				}
+			}
+		})();
+	
+	}
 
 }
-
+	
 //Keyboard event handler
 function keyListener(e){
 
 	//Ignore anything with alt in it
 	if(e.altKey) return;
+	
+	//Repopulate if we don't yet exist
+	if(!destinations) populateDestinations();
 
 	//Ctrl + Left
 	if(e.ctrlKey && !e.shiftKey && e.keyCode == 37 && destinations.prev){
@@ -103,5 +127,9 @@ function keyListener(e){
 
 //The key listening event should only be bound to the top window
 if (window == top) {
+	document.addEventListener('DOMSubtreeModified', resetDestinations);
 	window.addEventListener('keydown', keyListener, false);
 }
+
+//Initial population
+populateDestinations();
