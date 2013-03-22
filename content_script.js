@@ -23,7 +23,13 @@ function populateDestinations(){
 	timer = null;
 	
 	//Reset the list of destinations
-	targets = destinations = {
+	destinations = {
+		prev: null,
+		next: null,
+		up: null,
+		top: null
+	};
+	targets = {
 		prev: null,
 		next: null,
 		up: null,
