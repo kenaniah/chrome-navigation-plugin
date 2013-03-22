@@ -40,6 +40,12 @@ for(var dest in destinations){
 	if(dest == "prev"){
 		regexes.push(/^prev/i);
 	}
+	if(dest == "up"){
+		regexes.push(/^up\b/i);
+	}
+	if(dest == "top"){
+		regexes.push(/^home/i);
+	}
 
 	//Attempt to match links based on text (first match wins)
 	(function(){
