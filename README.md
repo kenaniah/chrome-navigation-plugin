@@ -41,3 +41,4 @@ Uses HTML's `rel` attribute on `LINK` and `A` tags to determine where to go. Cur
  * `rel="prev"`
  * `rel="up"`
  * `rel="top"`
+ * Autodetection when `rel` links are missing :-)
