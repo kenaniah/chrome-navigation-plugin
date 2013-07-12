@@ -1,4 +1,4 @@
-Navigation Shortcuts for Google Chrome
+Navigation Shortcuts for Chrome
 =======================
 
 Navigation is a extension for Chrome that allows you to navigate to the next, previous, 
