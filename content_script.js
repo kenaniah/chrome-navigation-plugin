@@ -138,7 +138,7 @@ function keyListener(e){
 		if(!document.body.scrollTop) action = "prev";
 	}
 	
-	if(!action) return;
+	if(!action || e.srcElement.tagName == "INPUT" || e.srcElement.tagName == "TEXTAREA") return;
 	
 	//Navigate or click the link
 	if(targets[action]){
