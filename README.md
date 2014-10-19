@@ -15,12 +15,15 @@ or top page using simple keyboard shortcuts. The extension can be found here:
     <td>next page (when scrolled to the bottom)</td>
   </tr>
   <tr>
-    <td>Ctrl + Right</td>
-    <td>next page</td>
-  </tr>
-  <tr>
     <td>Shift + Space Bar</td>
     <td>previous page (when scrolled to the top)</td>
+  </tr>
+  <tr>
+    <th colspan="2">Windows Specific</th>
+  </tr>
+  <tr>
+    <td>Ctrl + Right</td>
+    <td>next page</td>
   </tr>
   <tr>
     <td>Ctrl + Left</td>
@@ -32,6 +35,25 @@ or top page using simple keyboard shortcuts. The extension can be found here:
   </tr>
   <tr>
     <td>Ctrl + Shift + Up</td>
+    <td>top page</td>
+  </tr>
+  <tr>
+    <th colspan="2">Mac Specific</th>
+  </tr>
+  <tr>
+    <td>Option + Right</td>
+    <td>next page</td>
+  </tr>
+  <tr>
+    <td>Option + Left</td>
+    <td>previous page</td>
+  </tr>
+  <tr>
+    <td>Option + Up</td>
+    <td>section page</td>
+  </tr>
+  <tr>
+    <td>Option + Shift + Up</td>
     <td>top page</td>
   </tr>
 </table>

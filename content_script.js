@@ -98,43 +98,53 @@ function populateDestinations(){
 //Keyboard event handler
 function keyListener(e){
 
-	//Ignore anything with alt in it
-	if(e.altKey) return;
+	//Assume windows settings by default
+	var cmdKey = e.ctrlKey;
+	var ignoreKey = e.altKey;
+	
+	//Detect the shortcut sequence based on OS
+	if(navigator.platform.match(/^Mac/)){
+		cmdKey = e.altKey;
+		ignoreKey = e.ctrlKey;
+	}
+	
+	//Ignore anything with ignored key in it
+	if(e.ignoreKey) return;
 	
 	//Repopulate if we don't yet exist
 	if(!destinations) populateDestinations();
 	
 	var action = null;
 
-	//Ctrl + Left
-	if(e.ctrlKey && !e.shiftKey && e.keyCode == 37 && destinations.prev){
+	//Key + Left
+	if(cmdKey && !e.shiftKey && e.keyCode == 37 && destinations.prev){
 		action = "prev";
 	}
 
-	//Ctrl + Right
-	if(e.ctrlKey && !e.shiftKey && e.keyCode == 39 && destinations.next){
+	//Key + Right
+	if(cmdKey && !e.shiftKey && e.keyCode == 39 && destinations.next){
 		action = "next";
 	}
 
-	//Ctrl + Up
-	if(e.ctrlKey && !e.shiftKey && e.keyCode == 38 && destinations.up){
+	//Key + Up
+	if(cmdKey && !e.shiftKey && e.keyCode == 38 && destinations.up){
 		action = "up";
 	}
 
-	//Ctrl + Shift + Up
-	if(e.ctrlKey && e.shiftKey && e.keyCode == 38 && destinations.top){
+	//Key + Shift + Up
+	if(cmdKey && e.shiftKey && e.keyCode == 38 && destinations.top){
 		action = "top";
 	}
 
 	//Space (when scrolled to the bottom of the window)
-	if(!e.ctrlKey && !e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.next){
+	if(!cmdKey && !e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.next){
 		if(document.body.scrollHeight - document.body.scrollTop - document.documentElement.clientHeight <= 0){
 			action = "next";
 		}
 	}
 
 	//Shift + Space (when scrolled to the top of the window)
-	if(!e.ctrlKey && e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.prev){
+	if(!cmdKey && e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.prev){
 		if(!document.body.scrollTop) action = "prev";
 	}
 	
