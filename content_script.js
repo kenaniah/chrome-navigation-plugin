@@ -138,7 +138,8 @@ function keyListener(e){
 
 	//Space (when scrolled to the bottom of the window)
 	if(!cmdKey && !e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.next){
-		if(document.body.scrollHeight - document.body.scrollTop - document.body.clientHeight <= 1){
+	    if(((document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight) 
+	       - ((document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop) - document.body.clientHeight <= 1){
 			action = "next";
 		}
 	}
