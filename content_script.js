@@ -150,6 +150,9 @@ function keyListener(e){
 	
 	if(!action || e.srcElement.tagName == "INPUT" || e.srcElement.tagName == "TEXTAREA") return;
 	
+	//Cancel the event's default action
+	e.preventDefault();
+	
 	//Navigate or click the link
 	if(targets[action]){
 		targets[action].click();
