@@ -78,11 +78,17 @@ function populateDestinations(){
 			regexes.push(/^home/i);
 		}
 	
-		//Attempt to match links based on text (first match wins)
+		//Attempt to match links based on text or class name (first match wins)
 		(function(){
 			for(var r in regexes){
 				for(var i in links){
-					if(links[i].href && links[i].innerText.replace(/[^a-z]/i, "").trim().match(regexes[r])){
+					if(
+						links[i].href 
+						&& (
+							links[i].innerText.replace(/[^a-z]/i, "").trim().match(regexes[r])
+							|| links[i].className.trim().match(regexes[r])
+						)
+					){
 						destinations[dest] = links[i].href;
 						targets[dest] = links[i];
 						return;
