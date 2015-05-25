@@ -1,5 +1,5 @@
 //Global variables
-var destiations = {};
+var destinations = {};
 var targets = {};
 var links = [];
 var timer;
