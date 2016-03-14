@@ -66,16 +66,16 @@ function populateDestinations(){
 		var regexes = [];
 	
 		if(dest == "next"){
-			regexes.push(/^next/i);
+			regexes.push(/\bnext\b/i);
 		}
 		if(dest == "prev"){
-			regexes.push(/^prev/i);
+			regexes.push(/\bprev(ious)?\b/i);
 		}
 		if(dest == "up"){
-			regexes.push(/^up\b/i);
+			regexes.push(/\bup\b/i);
 		}
 		if(dest == "top"){
-			regexes.push(/^home/i);
+			regexes.push(/\bhome/i);
 		}
 	
 		//Attempt to match links based on text or class name (first match wins)
