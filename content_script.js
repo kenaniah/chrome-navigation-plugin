@@ -3,6 +3,7 @@ var destinations = {};
 var targets = {};
 var links = [];
 var timer;
+var prevScrollTop;
 
 //Resets the timer and causes populateDestinations() to be called after a delay
 function resetDestinations(){
@@ -21,6 +22,8 @@ function populateDestinations(){
 		clearTimeout(timer);
 	}
 	timer = null;
+
+        prevScrollTop = -1;
 	
 	//Reset the list of destinations
 	destinations = {
@@ -143,10 +146,15 @@ function keyListener(e){
 	}
 
 	//Space (when scrolled to the bottom of the window)
-	if(!cmdKey && !e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.next){
-		if(document.body.scrollHeight - document.body.scrollTop - document.documentElement.clientHeight <= 0){
-			action = "next";
-		}
+        //End of scroll area is detected by not changing scrollTop on consecutive space bar presses
+	if(!cmdKey && !e.shiftKey && e.keyCode == 32 && e.srcElement == document.body 
+                   && destinations.next && document.body.scrollTop == prevScrollTop){
+	    action = "next";
+	    prevScrollTop = -1;
+	}
+        else {
+            prevScrollTop = document.body.scrollTop;
+            return;
 	}
 
 	//Shift + Space (when scrolled to the top of the window)
