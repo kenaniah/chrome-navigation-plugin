@@ -1,6 +1,6 @@
 {
   "name" : "Navigation Shortcuts",
-  "version" : "8.0",
+  "version" : "8.1",
   "manifest_version": 2,
   "description" : "Allows next, up, prev, and top links to be used with simple keyboard shortcuts.",
   "permissions" : [ "history" ],
@@ -14,5 +14,8 @@
       "run_at" : "document_end",
       "all_frames" : false
     }
-  ]
+  ],
+  "browser_action": {
+    "default_popup": "README.md"
+  }
 }
