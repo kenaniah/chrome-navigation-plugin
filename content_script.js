@@ -4,6 +4,11 @@ var targets = {}
 var links = []
 var timer
 
+// List of domains this extension should be disabled on
+var ignoredDomains = [
+	/docs\.google\.com/
+]
+
 // Resets the timer and causes populateDestinations() to be called after a delay
 function resetDestinations(){
 	destinations = {}
@@ -212,8 +217,22 @@ function keyListener(e){
 
 // The key listening event should only be bound to the top window
 if (window == top) {
-	document.addEventListener('DOMSubtreeModified', resetDestinations)
-	window.addEventListener('keydown', keyListener, false)
+
+	// Check the ignored domain list
+	var bindEvents = true
+	for (var i = 0; i < ignoredDomains.length; i++){
+		if(window.location.hostname.match(ignoredDomains[i])){
+			bindEvents = false
+			break
+		}
+	}
+
+	// Bind the key handlers
+	if(bindEvents){
+		document.addEventListener('DOMSubtreeModified', resetDestinations)
+		window.addEventListener('keydown', keyListener, false)
+	}
+
 }
 
 // Initial population

@@ -1,7 +1,7 @@
 # Navigation Shortcuts for Chrome
 
-Navigation Shortcuts is a extension for Chrome that allows you to navigate to the next, previous, 
-or top page using simple keyboard shortcuts. The extension can be found here: 
+Navigation Shortcuts is a extension for Chrome that allows you to navigate to the next, previous,
+or top page using simple keyboard shortcuts. The extension can be found here:
 <a href="https://chrome.google.com/webstore/detail/ioogigbgjmadikfocfdmmdlghogaehca/details">Navigation Shortcuts - Chrome Web Store</a>.
 
 <table>
@@ -70,6 +70,10 @@ Uses HTML's `rel` attribute on `LINK` and `A` tags to determine where to go. Cur
  * German
  * Russian
  * Ukrainian
+
+## Disabled On
+
+ * `docs.google.com`
 
 ## Contributors
 
