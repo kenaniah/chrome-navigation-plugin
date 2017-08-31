@@ -18,32 +18,6 @@ function resetDestinations(){
 	timer = setTimeout(populateDestinations, 50)
 }
 
-// Checks the scroll position of the document
-function checkScrollPosition(el){
-
-	// $0.scrollHeight is the total height of the element
-	// $0.clientHeight is the rendered height of the element
-	// When scrollHeight - clientHeight = 0, the element does not scroll
-
-	var positions = {
-		atTop: true,
-		atBottom: true
-	}
-
-	while(true){
-
-		positions.atTop = positions.atTop && (el.scrollTop <= 0)
-		positions.atBottom = positions.atBottom && (el.scrollHeight - el.clientHeight - el.scrollTop <= 0)
-
-		if (el == document.body) break;
-		el = el.parentElement;
-
-	}
-
-	return positions;
-
-}
-
 // Populates the list of destinations
 function populateDestinations(){
 
@@ -216,13 +190,15 @@ function keyListener(e){
 	}
 
 	// Space (when scrolled to the bottom of the window)
-	if(!cmdKey && !e.shiftKey && e.keyCode == 32 && destinations.next && checkScrollPosition(e.srcElement).atBottom){
-		action = "next"
+	if(!cmdKey && !e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.next){
+		if(document.body.scrollHeight - document.body.scrollTop - document.documentElement.clientHeight <= 0){
+			action = "next"
+		}
 	}
 
 	// Shift + Space (when scrolled to the top of the window)
-	if(!cmdKey && e.shiftKey && e.keyCode == 32 && destinations.prev && checkScrollPosition(e.srcElement).atTop){
-		action = "prev"
+	if(!cmdKey && e.shiftKey && e.keyCode == 32 && e.srcElement == document.body && destinations.prev){
+		if(!document.body.scrollTop) action = "prev"
 	}
 
 	if(!action || e.srcElement.tagName == "INPUT" || e.srcElement.tagName == "TEXTAREA") return
